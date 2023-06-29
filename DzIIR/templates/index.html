@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Эквалайзер</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body class="container">
+    <h3 align="center">Задвижки с интервалом 0-100</h3>
+    <form method="post" action="{% url 'index' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for f in form %}
+            <hr>
+            {{ f.label }}
+            <br>
+            {{ f }}
+        {% endfor %}
+        <hr><br>
+        <button type="submit" class="btn btn-primary mt-3">Применить</button>
+    </form>
+
+    {% if image_list %}
+
+        <br><hr>
+        <p><a class="link-opacity-10" href="{% static 'media/audio/rock.wav' %}" download>Скачать исходный сигнал</a></p>
+        <br>
+        <p><a class="link-opacity-10" href="{% static 'media/audio/output.wav' %}" download>Скачать выходной сигнал</a></p>
+
+        {% for l in image_list %}
+            <hr><br>
+            <p>{{ l.name }}</p>
+            <img src="{% static l.url %}" class="img-fluid" alt="NotFound">
+        {% endfor %}
+    {% endif %}
+
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
